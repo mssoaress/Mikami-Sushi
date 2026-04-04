@@ -268,6 +268,13 @@ const menuItems = {
       img: "img/bebidas/h2o.png",
     },
     {
+      id: 711,
+      name: "Guaraná Antartica (1L)",
+      desc: "Guaraná 1 Litro.",
+      price: 10.00,
+      img: "img/bebidas/guarana1l.png",
+    },
+    {
       id: 707,
       name: "Água",
       desc: "Água mineral.",
