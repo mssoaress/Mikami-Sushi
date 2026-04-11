@@ -64,18 +64,18 @@ const menuItems = {
       img: "img/individuais/hossomaki.jpg",
     },
     {
+      id: 203,
+      name: "Hot Roll Camarão",
+      desc: "Hot Roll com camarão.",
+      price: 22.00,
+      img: "img/individuais/rotrollcamarao.jpeg",
+    },
+    {
       id: 205,
       name: "Croquete de Salmão (6 un.)",
       desc: "Croquete de salmão, 6 unidades.",
       price: 15.00,
       img: "img/individuais/croquetesalm.jpg",
-    },
-    {
-      id: 206,
-      name: "Kani Camarão (6 un.)",
-      desc: "Kani Camarão, 6 unidades.",
-      price: 15.00,
-      img: "img/individuais/kanicamarao.jpg",
     },
     {
       id: 207,
