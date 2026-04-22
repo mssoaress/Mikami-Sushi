@@ -306,7 +306,7 @@ const menuItems = {
       id: 711,
       name: "Suco Laranja com Morango",
       desc: "Suco da fruta laranja com morango.",
-      price: 15.0,
+      price: 10.0,
       img: "img/bebidas/sucolaranjamorango.jpeg",
     },
   ],
