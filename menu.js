@@ -67,7 +67,7 @@ const menuItems = {
       id: 203,
       name: "Hot Roll Camarão",
       desc: "Hot Roll com camarão.",
-      price: 22.0,
+      price: 25.0,
       img: "img/individuais/rotrollacamarão1.jpeg",
     },
     {
