@@ -1,13 +1,13 @@
 // ========================================
 //   Mikami Sushi — Dados do Cardápio
 // ========================================
-// Mikami Sushi
+
 const menuItems = {
   combos: [
     {
       id: 101,
       name: "Temaki + Hot Roll",
-      desc: "Temaki de salmão frito + 10 peças de hot rol de salmão.",
+      desc: "Temaki de salmão frito + 10 peças de hot roll de salmão.",
       price: 37.0,
       img: "img/combos/combo1.jpeg",
     },
@@ -27,15 +27,15 @@ const menuItems = {
     },
     {
       id: 104,
-      name: "20 Hot Holl Sortidas",
-      desc: "20 peças de hot holl sortidas (salmão skim e Kani).",
+      name: "20 Hot Roll Sortidas",
+      desc: "20 peças de hot roll sortidas (salmão skim e Kani).",
       price: 32.0,
       img: "img/combos/combo4.jpeg",
     },
     {
       id: 105,
       name: "Joe + Niguiri + Mix",
-      desc: "2 joe, 2 niguiri, 5 uramaki, 5 hosomaki, 6 hot holl.",
+      desc: "2 joe, 2 niguiri, 5 uramaki, 5 hosomaki, 6 hot roll.",
       price: 46.0,
       img: "img/combos/combo5.jpeg",
     },
@@ -51,8 +51,8 @@ const menuItems = {
     },
     {
       id: 202,
-      name: "Hot Holl",
-      desc: "Hot holl, sabores: salmão, Kani, skim.",
+      name: "Hot Roll",
+      desc: "Hot roll, sabores: salmão, Kani, skim.",
       price: 16.0,
       img: "img/individuais/hotroll1.jpg",
     },
@@ -64,7 +64,7 @@ const menuItems = {
       img: "img/individuais/hossomaki.jpg",
     },
     {
-      id: 203,
+      id: 204,                              // era 203 — corrigido
       name: "Hot Roll Camarão",
       desc: "Hot Roll com camarão.",
       price: 25.0,
@@ -105,6 +105,13 @@ const menuItems = {
       price: 37.0,
       img: "img/individuais/poke.jpeg",
     },
+    {
+      id: 211,
+      name: "Camarão ao Alho e Óleo 250g",
+      desc: "Camarão ao Alho e Óleo, porção de 250g.",
+      price: 25.0,
+      img: "img/individuais/camaraoaoalhoeoleo.jpeg",
+    },
   ],
 
   especiais: [
@@ -139,7 +146,7 @@ const menuItems = {
     {
       id: 305,
       name: "Joe",
-      desc: "Joe Sushi",
+      desc: "Joe Sushi.",
       price: 18.0,
       img: "img/especiais/joeespecial.jpeg",
     },
@@ -217,15 +224,15 @@ const menuItems = {
   doces: [
     {
       id: 601,
-      name: "Harumaki de Banana com Nutela",
-      desc: "Harumaki doce recheado com banana e Nutela.",
+      name: "Harumaki de Banana com Nutella",
+      desc: "Harumaki doce recheado com banana e Nutella.",
       price: 20.0,
       img: "img/peçasdoces/harumakinutela.jpg",
     },
     {
       id: 602,
-      name: "Harumaki Nutela + Doce de Leite + Romeu e Julieta",
-      desc: "Harumaki com Nutela, doce de leite e Romeu e Julieta.",
+      name: "Harumaki Nutella + Doce de Leite + Romeu e Julieta",
+      desc: "Harumaki com Nutella, doce de leite e Romeu e Julieta.",
       price: 15.0,
       img: "img/peçasdoces/harumakidocedeleite.jpg",
     },
@@ -248,28 +255,28 @@ const menuItems = {
     },
     {
       id: 703,
-      name: "Guaraná Antartica (350ml)",
-      desc: "Refrigerante Guaraná Antartica em lata.",
+      name: "Guaraná Antarctica (350ml)",
+      desc: "Refrigerante Guaraná Antarctica em lata.",
       price: 6.0,
       img: "img/bebidas/guarana.png",
     },
     {
-      id: 703,
-      name: "Guaraná Antartica Zero (350ml)",
-      desc: "Refrigerante Guaraná Antartica em lata.",
+      id: 704,                              // era 703 — corrigido
+      name: "Guaraná Antarctica Zero (350ml)",
+      desc: "Refrigerante Guaraná Antarctica Zero em lata.",
       price: 6.0,
       img: "img/bebidas/guaranazero.png",
     },
     {
-      id: 704,
+      id: 705,                              // era 704
       name: "H2O Limoneto (500ml)",
       desc: "Refrigerante H2O Limoneto em garrafa pet.",
       price: 7.0,
       img: "img/bebidas/h2o.png",
     },
     {
-      id: 711,
-      name: "Guaraná Antartica (1L)",
+      id: 706,                              // era 711 — corrigido
+      name: "Guaraná Antarctica (1L)",
       desc: "Guaraná 1 Litro.",
       price: 10.0,
       img: "img/bebidas/guarana1l.png",
@@ -293,7 +300,7 @@ const menuItems = {
       name: "Suco Copo",
       desc: "Suco natural no copo.",
       price: 8.0,
-      img: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400&q=80",
+      img: "img/bebidas/sucocopo.jpg",   // movido pra local — sem Unsplash externo
     },
     {
       id: 710,
@@ -303,7 +310,7 @@ const menuItems = {
       img: "img/bebidas/sucojarra.jpg",
     },
     {
-      id: 711,
+      id: 711,                              // era duplicata de 711 — mantido para Suco Laranja
       name: "Suco Laranja com Morango",
       desc: "Suco da fruta laranja com morango.",
       price: 10.0,

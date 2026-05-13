@@ -8,11 +8,13 @@
   <link rel="icon" href="img/headerlodo.jpg.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <!-- HEADER -->
   <header class="header">
     <div class="container header-container">
       <a href="#home" class="logo">
@@ -26,21 +28,33 @@
     </div>
   </header>
 
+  <!-- CARRINHO FLUTUANTE (mobile) -->
   <button class="cart-btn floating-cart" id="cartFloating" aria-label="Abrir carrinho">
     <i class="fas fa-shopping-bag"></i>
     <span class="cart-badge" id="cartCountFloating">0</span>
   </button>
 
+  <!-- OVERLAY + DRAWER DO CARRINHO -->
   <div class="drawer-overlay" id="cartOverlay"></div>
-  <aside class="cart-drawer" id="cartDrawer">
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Carrinho de compras">
+
     <div class="drawer-header">
       <h2>Seu pedido</h2>
-      <button class="drawer-close" id="closeCart" aria-label="Fechar">×</button>
+      <button class="drawer-close" id="closeCart" aria-label="Fechar carrinho">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
+
+    <!-- ZONA ROLÁVEL: itens -->
     <div class="drawer-items" id="cartItems">
-      <p class="empty-cart">Carrinho vazio.</p>
+      <div class="empty-cart">
+        <i class="fas fa-shopping-bag"></i>
+        <p>Seu carrinho está vazio</p>
+        <span>Adicione itens do cardápio</span>
+      </div>
     </div>
-    <!-- Entrega fica dentro da área rolável -->
+
+    <!-- ZONA ROLÁVEL: subtotal + entrega -->
     <div class="drawer-shipping" id="drawerShipping">
       <div class="subtotal">
         <span>Subtotal</span>
@@ -49,78 +63,61 @@
       <div class="shipping-section">
         <h3><i class="fas fa-truck"></i> Entrega</h3>
         <div class="custom-select" id="customShipping">
-          <button class="custom-select__trigger" id="shippingTrigger" type="button">
+          <button class="custom-select__trigger" id="shippingTrigger" type="button" aria-haspopup="listbox">
             <span class="custom-select__icon">🏠</span>
             <span class="custom-select__label" id="shippingLabel">Retirada</span>
             <span class="custom-select__price free" id="shippingPriceLabel">Grátis</span>
             <i class="fas fa-chevron-down custom-select__arrow"></i>
           </button>
-          <ul class="custom-select__dropdown" id="shippingDropdown">
-            <li class="custom-select__option selected" data-value="retirada" data-price="0" data-icon="🏠" data-label="Retirada" data-display="Grátis" data-free="true">
-              <span class="opt-icon">🏠</span>
-              <span class="opt-name">Retirada</span>
-              <span class="opt-price free">Grátis</span>
+          <ul class="custom-select__dropdown" id="shippingDropdown" role="listbox">
+            <li class="custom-select__option selected" data-value="retirada" data-price="0"  data-icon="🏠" data-label="Retirada"        data-display="Grátis"    data-free="true">
+              <span class="opt-icon">🏠</span><span class="opt-name">Retirada</span><span class="opt-price free">Grátis</span>
             </li>
-            <li class="custom-select__option" data-value="cidade" data-price="3" data-icon="📍" data-label="Cidade" data-display="R$ 3,00">
-              <span class="opt-icon">📍</span>
-              <span class="opt-name">Cecilia</span>
-              <span class="opt-price">R$ 3,00</span>
+            <li class="custom-select__option" data-value="cidade"          data-price="3"  data-icon="📍" data-label="Cidade"           data-display="R$ 3,00">
+              <span class="opt-icon">📍</span><span class="opt-name">Cecilia</span><span class="opt-price">R$ 3,00</span>
             </li>
-            <li class="custom-select__option" data-value="embebedado" data-price="5" data-icon="📍" data-label="Embebedado" data-display="R$ 5,00">
-              <span class="opt-icon">📍</span>
-              <span class="opt-name">Embebedado</span>
-              <span class="opt-price">R$ 5,00</span>
+            <li class="custom-select__option" data-value="embebedado"      data-price="5"  data-icon="📍" data-label="Embebedado"       data-display="R$ 5,00">
+              <span class="opt-icon">📍</span><span class="opt-name">Embebedado</span><span class="opt-price">R$ 5,00</span>
             </li>
-            <li class="custom-select__option" data-value="pedra_branca" data-price="6" data-icon="📍" data-label="Pedra Branca" data-display="R$ 6,00">
-              <span class="opt-icon">📍</span>
-              <span class="opt-name">Pedra Branca</span>
-              <span class="opt-price">R$ 6,00</span>
+            <li class="custom-select__option" data-value="pedra_branca"    data-price="6"  data-icon="📍" data-label="Pedra Branca"     data-display="R$ 6,00">
+              <span class="opt-icon">📍</span><span class="opt-name">Pedra Branca</span><span class="opt-price">R$ 6,00</span>
             </li>
-            <li class="custom-select__option" data-value="cumati" data-price="5" data-icon="📍" data-label="Cumati" data-display="R$ 5,00">
-              <span class="opt-icon">📍</span>
-              <span class="opt-name">Cumati</span>
-              <span class="opt-price">R$ 5,00</span>
+            <li class="custom-select__option" data-value="cumati"          data-price="5"  data-icon="📍" data-label="Cumati"           data-display="R$ 5,00">
+              <span class="opt-icon">📍</span><span class="opt-name">Cumati</span><span class="opt-price">R$ 5,00</span>
             </li>
-            <li class="custom-select__option" data-value="cecilia_de_cima" data-price="6" data-icon="📍" data-label="Cecília de Cima" data-display="R$ 6,00">
-              <span class="opt-icon">📍</span>
-              <span class="opt-name">Cecília de Cima</span>
-              <span class="opt-price">R$ 6,00</span>
+            <li class="custom-select__option" data-value="cecilia_de_cima" data-price="6"  data-icon="📍" data-label="Cecília de Cima"  data-display="R$ 6,00">
+              <span class="opt-icon">📍</span><span class="opt-name">Cecília de Cima</span><span class="opt-price">R$ 6,00</span>
             </li>
-            <li class="custom-select__option" data-value="vilinha" data-price="5" data-icon="📍" data-label="Vilinha" data-display="R$ 5,00">
-              <span class="opt-icon">📍</span>
-              <span class="opt-name">Vilinha</span>
-              <span class="opt-price">R$ 6,00</span>
+            <li class="custom-select__option" data-value="vilinha"         data-price="6"  data-icon="📍" data-label="Vilinha"          data-display="R$ 6,00">
+              <!-- preço corrigido: era data-price="5" mas exibia R$ 6,00 -->
+              <span class="opt-icon">📍</span><span class="opt-name">Vilinha</span><span class="opt-price">R$ 6,00</span>
             </li>
-            <li class="custom-select__option" data-value="boi_seco" data-price="15" data-icon="📍" data-label="Boi Seco" data-display="R$ 15,00">
-              <span class="opt-icon">📍</span>
-              <span class="opt-name">Boi Seco</span>
-              <span class="opt-price">R$ 15,00</span>
+            <li class="custom-select__option" data-value="boi_seco"        data-price="15" data-icon="📍" data-label="Boi Seco"         data-display="R$ 15,00">
+              <span class="opt-icon">📍</span><span class="opt-name">Boi Seco</span><span class="opt-price">R$ 15,00</span>
             </li>
             <li class="custom-select__option" data-value="vertente_do_lerio" data-price="15" data-icon="📍" data-label="Vertente do Lério" data-display="R$ 15,00">
-              <span class="opt-icon">📍</span>
-              <span class="opt-name">Vertente do Lério</span>
-              <span class="opt-price">R$ 15,00</span>
+              <span class="opt-icon">📍</span><span class="opt-name">Vertente do Lério</span><span class="opt-price">R$ 15,00</span>
             </li>
           </ul>
         </div>
       </div>
     </div>
 
-    <!-- Footer fixo: total + botões -->
+    <!-- FOOTER FIXO: total + pagamento + botões -->
     <div class="drawer-footer">
       <div class="final-total">
         <span>Total</span>
         <strong id="cartTotal">R$ 0,00</strong>
       </div>
-      <!-- Pagamento -->
+
       <div class="payment-section">
         <h3><i class="fas fa-wallet"></i> Pagamento</h3>
         <div class="payment-options">
-          <button class="payment-option active" data-method="dinheiro">
+          <button class="payment-option active" data-method="dinheiro" aria-pressed="true">
             <i class="fas fa-money-bill-wave"></i>
             <span>Dinheiro</span>
           </button>
-          <button class="payment-option" data-method="pix">
+          <button class="payment-option" data-method="pix" aria-pressed="false">
             <i class="fa-brands fa-pix pix-logo"></i>
             <span>Pix</span>
           </button>
@@ -136,13 +133,17 @@
         </button>
       </div>
     </div>
+
   </aside>
 
+  <!-- MAIN -->
   <main>
+
+    <!-- HERO -->
     <section class="hero" id="home">
       <div class="container hero-grid">
         <div class="hero-content">
-          <span class="badge">Delivery & Retirada</span>
+          <span class="badge">Delivery &amp; Retirada</span>
           <h1>Sushi fresco,<br /><em>Experiência<br class="title-break" /> Mikami.</em></h1>
           <p class="hero-subtitle">Combos, temakis e sashimis com qualidade premium. Peça em minutos.</p>
           <div class="hero-info">
@@ -157,7 +158,7 @@
               <i class="fas fa-location-dot"></i>
               <div>
                 <strong>Local</strong>
-                <span>Santa Cecília • Centro</span>
+                <span>Santa Cecília · Centro</span>
               </div>
             </div>
           </div>
@@ -170,57 +171,64 @@
       </div>
     </section>
 
+    <!-- CARDÁPIO -->
     <section class="menu" id="cardapio">
       <div class="container">
         <div class="section-header">
           <h2>Cardápio</h2>
-          <div class="tab-bar">
-            <button class="tab-btn active" data-tab="combos">Combos</button>
-            <button class="tab-btn" data-tab="individuais">Individuais</button>
-            <button class="tab-btn" data-tab="especiais">Especiais</button>
-            <button class="tab-btn" data-tab="temakis">Temakis</button>
-            <button class="tab-btn" data-tab="yakisoba">Yakisoba</button>
-            <button class="tab-btn" data-tab="doces">Peças Doces</button>
-            <button class="tab-btn" data-tab="bebidas">Bebidas</button>
+          <div class="tab-bar" role="tablist">
+            <button class="tab-btn active" data-tab="combos"      role="tab" aria-selected="true">Combos</button>
+            <button class="tab-btn"        data-tab="individuais" role="tab" aria-selected="false">Individuais</button>
+            <button class="tab-btn"        data-tab="especiais"   role="tab" aria-selected="false">Especiais</button>
+            <button class="tab-btn"        data-tab="temakis"     role="tab" aria-selected="false">Temakis</button>
+            <button class="tab-btn"        data-tab="yakisoba"    role="tab" aria-selected="false">Yakisoba</button>
+            <button class="tab-btn"        data-tab="doces"       role="tab" aria-selected="false">Peças Doces</button>
+            <button class="tab-btn"        data-tab="bebidas"     role="tab" aria-selected="false">Bebidas</button>
           </div>
         </div>
 
-        <div class="menu-grid active" id="combos-items"></div>
-        <div class="menu-grid" id="individuais-items"></div>
-        <div class="menu-grid" id="especiais-items"></div>
-        <div class="menu-grid" id="temakis-items"></div>
-        <div class="menu-grid" id="yakisoba-items"></div>
-        <div class="menu-grid" id="doces-items"></div>
-        <div class="menu-grid" id="bebidas-items"></div>
+        <div class="menu-grid active" id="combos-items"      role="tabpanel"></div>
+        <div class="menu-grid"        id="individuais-items" role="tabpanel"></div>
+        <div class="menu-grid"        id="especiais-items"   role="tabpanel"></div>
+        <div class="menu-grid"        id="temakis-items"     role="tabpanel"></div>
+        <div class="menu-grid"        id="yakisoba-items"    role="tabpanel"></div>
+        <div class="menu-grid"        id="doces-items"       role="tabpanel"></div>
+        <div class="menu-grid"        id="bebidas-items"     role="tabpanel"></div>
       </div>
     </section>
+
   </main>
 
-  <p class="footer-text">
-      © </span> Mikami Sushi
-      <a href="https://www.instagram.com/mikamisushi/" target="_blank" class="instagram-link">
+  <!-- FOOTER — tag semântica correta -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© <span id="year"></span> Mikami Sushi</p>
+      <a href="https://www.instagram.com/mikamisushi/" target="_blank" rel="noopener noreferrer" class="instagram-link" aria-label="Instagram Mikami Sushi">
         <i class="fa-brands fa-instagram"></i>
       </a>
-    </p>
+    </div>
+  </footer>
 
+  <!-- TOAST -->
+  <div class="toast-container" id="toast" aria-live="polite"></div>
 
-  <div class="toast-container" id="toast"></div>
-
-  <!-- Modal Pix -->
-  <div class="pix-overlay" id="pixOverlay">
+  <!-- MODAL PIX -->
+  <div class="pix-overlay" id="pixOverlay" role="dialog" aria-modal="true" aria-labelledby="pixTitle">
     <div class="pix-modal" id="pixModal">
-      <button class="pix-close" id="pixClose" aria-label="Fechar"><i class="fas fa-times"></i></button>
+      <button class="pix-close" id="pixClose" aria-label="Fechar modal Pix">
+        <i class="fas fa-times"></i>
+      </button>
 
       <div class="pix-header">
         <div class="pix-header-icon"><i class="fas fa-qrcode"></i></div>
         <div>
-          <h2>Pagar com Pix</h2>
+          <h2 id="pixTitle">Pagar com Pix</h2>
           <p id="pixOrderTotal">Total: R$ 0,00</p>
         </div>
       </div>
 
       <div class="pix-qr-wrapper">
-        <img src="img/qrcode.jpg" alt="QR Code Pix" id="pixQrCode" class="pix-qr-img" />
+        <img src="img/qrcode.jpg" alt="QR Code Pix Mikami Sushi" id="pixQrCode" class="pix-qr-img" />
         <p class="pix-qr-hint">Aponte a câmera para pagar</p>
       </div>
 
@@ -241,6 +249,10 @@
 
   <script src="menu.js"></script>
   <script src="script.js"></script>
-  <script src="carrinho.js"></script>
+  <script>
+    // Ano no footer
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
