@@ -112,6 +112,20 @@ const menuItems = {
       price: 25.0,
       img: "img/individuais/camaraoaoalhoeoleo.jpeg",
     },
+    {
+      id: 212,
+      name: "Batata Frita P",
+      desc: "Porção de Batata Frita tam: P",
+      price: 10.0,
+      img: "img/individuais/batatafritaP.png",
+    },
+    {
+      id: 213,
+      name: "Batata Frita G",
+      desc: "Porção de Batata Frita tam: G",
+      price: 20.0,
+      img: "img/individuais/batatafritaG.png",
+    },
   ],
 
   especiais: [
