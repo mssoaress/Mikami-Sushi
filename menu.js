@@ -314,7 +314,7 @@ const menuItems = {
       name: "Suco Copo",
       desc: "Suco natural no copo.",
       price: 8.0,
-      img: "img/bebidas/sucocopo.jpg",   // movido pra local — sem Unsplash externo
+      img: "img/bebidas/sucocopo.png",   // movido pra local — sem Unsplash externo
     },
     {
       id: 710,
