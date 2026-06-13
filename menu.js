@@ -231,7 +231,7 @@ const menuItems = {
       name: "Yakisoba para 2 Pessoas",
       desc: "Yakisoba para 2 pessoas.",
       price: 30.0,
-      img: "img/yakisoba/yakisoba.jpg",
+      img: "img/yakisoba/yakisobap2.png",
     },
   ],
 
