@@ -43,6 +43,7 @@ export const menuItems = {
   doces: [
     { id: 601, name: "Harumaki de Banana com Nutella", desc: "Harumaki doce recheado com banana e Nutella.", price: 20.0, img: "/img/peçasdoces/harumakinutela.jpg" },
     { id: 602, name: "Harumaki Nutella + Doce de Leite + Romeu e Julieta", desc: "Harumaki com Nutella, doce de leite e Romeu e Julieta.", price: 15.0, img: "/img/peçasdoces/harumakidocedeleite.jpg" },
+    { id: 603, name: "Brownie com Sorvete", desc: "Brownie com Sorvete e cobertura de chocolate.", price: 15.0, img: "/img/peçasdoces/browniecomsorvete.png" },
   ],
   bebidas: [
     { id: 701, name: "Coca Zero Lata (350ml)", desc: "Refrigerante Coca-Cola Zero em lata.", price: 6.0, img: "/img/bebidas/cocazero.jpg" },
