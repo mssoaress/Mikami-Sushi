@@ -7,6 +7,7 @@ import Menu from './components/Menu';
 import CartDrawer from './components/CartDrawer';
 import ToastContainer from './components/ToastContainer';
 import Footer from './components/Footer';
+import FeaturedProducts from './components/FeaturedProducts';
 
 export default function App() {
   const { cart, addItem, incItem, decItem, clearCart, subtotal, count } = useCart();
@@ -42,10 +43,11 @@ export default function App() {
         showToast={showToast}
       />
 
-      <main>
-        <Hero />
-        <Menu onAdd={handleAdd} />
-      </main>
+  <main>
+  <Hero />
+  <Menu onAdd={handleAdd} />
+  <FeaturedProducts onAdd={handleAdd} />
+  </main>
 
       <Footer />
       <ToastContainer toasts={toasts} />
