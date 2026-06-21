@@ -1,10 +1,10 @@
-//import { useState } from 'react';
+import { useState } from 'react';
 import { useCart } from './hooks/useCart';
 import { useToast } from './hooks/useToast';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Menu from './components/Menu';
-//import CartDrawer from './components/CartDrawer';
+import CartDrawer from './components/CartDrawer';
 import ToastContainer from './components/ToastContainer';
 import Footer from './components/Footer';
 import FeaturedProducts from './components/FeaturedProducts';
