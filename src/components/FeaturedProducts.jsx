@@ -46,7 +46,7 @@ export default function FeaturedProducts({ onAdd }) {
 
       <div className="container">
         <div className="section-header">
-          <h2>Destaques da Casa</h2>
+          <h2>Destaques da Mikami</h2>
         </div>
 
         <div className="featured-grid">

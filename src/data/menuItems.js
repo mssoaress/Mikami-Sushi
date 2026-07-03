@@ -3,7 +3,7 @@ export const menuItems = {
     { id: 101, name: "Temaki + Hot Roll", desc: "Temaki de salmão frito + 10 peças de hot roll de salmão.", price: 37.0, img: "/img/combos/combo1.jpeg" },
     { id: 102, name: "Mini Dog + Croquete + Uramaki", desc: "Mini dog de salmão + 3 croquetes de salmão + 3 uramaki.", price: 32.0, img: "/img/combos/combo2.jpeg" },
     { id: 103, name: "Hot Skim + Uramaki + Rosomaki", desc: "10 hot skim + 8 uramaki salmão + 8 rosomaki de Kani.", price: 43.0, img: "/img/combos/combo3.jpeg" },
-    { id: 104, name: "20 Hot Roll Sortidas", desc: "20 peças de hot roll sortidas (salmão skim e Kani).", price: 32.0, img: "/img/combos/combo4.jpeg" },
+    { id: 104, name: "20 Hot Roll Sortidas", desc: "20 peças de hot roll sortidas (salmão skim e Kani).", price: 30.0, img: "/img/combos/combo4.jpeg" },
     { id: 105, name: "Joe + Niguiri + Mix", desc: "2 joe, 2 niguiri, 5 uramaki, 5 hosomaki, 6 hot roll.", price: 46.0, img: "/img/combos/combo5.jpeg" },
   ],
   individuais: [
@@ -15,7 +15,8 @@ export const menuItems = {
     { id: 207, name: "Hot Dog Salmão", desc: "Hot dog no estilo sushi com salmão.", price: 30.0, img: "/img/individuais/sushidog.jpg" },
     { id: 208, name: "Hot Dog Salmão e Camarão", desc: "Hot dog no estilo sushi com salmão e camarão.", price: 35.0, img: "/img/individuais/sushidogcamarão.jpg" },
     { id: 209, name: "Sunomo", desc: "Sunomo tradicional.", price: 10.0, img: "/img/individuais/sunomono.jpg" },
-    { id: 210, name: "Poke 500ml", desc: "Arroz gohan, cream cheese, manga, sunomono, Kani, salmão grelhado, cebola roxa, couve crispy.", price: 37.0, img: "/img/individuais/poke.jpeg" },
+    { id: 214, name: "Kani de Queijo", desc: "Kani sabor queijo (6 un.) ", price: 15.0, img: "/img/individuais/kani-queijo.jpeg" },
+    { id: 210, name: "Poke 500ml", desc: "Arroz gohan, cream cheese, manga, sunomono, Kani, salmão grelhado, cebola roxa, couve crispy.", price: 35.0, img: "/img/individuais/poke.jpeg" },
     { id: 211, name: "Camarão ao Alho e Óleo 250g", desc: "Camarão ao Alho e Óleo, porção de 250g.", price: 25.0, img: "/img/individuais/camaraoaoalhoeoleo.jpeg" },
     { id: 212, name: "Batata Frita P", desc: "Porção de Batata Frita tam: P", price: 10.0, img: "/img/individuais/batatafritaP.png" },
     { id: 213, name: "Batata Frita G", desc: "Porção de Batata Frita tam: G", price: 20.0, img: "/img/individuais/batatafritaG.png" },
@@ -28,6 +29,7 @@ export const menuItems = {
     { id: 305, name: "Joe", desc: "Joe Sushi.", price: 18.0, img: "/img/especiais/joeespecial.jpeg" },
     { id: 306, name: "Niguiri Salmão", desc: "Niguiri Salmão.", price: 18.0, img: "/img/especiais/niguirisalmao.jpeg" },
     { id: 307, name: "Mikami Supremo 500g", desc: "Mikami Supremo 500g.", price: 55.0, img: "/img/especiais/mikamisupremo.jpeg" },
+    { id: 308, name: "Hossomaki Especial ", desc: "Hossomaki especial (8 un.)", price: 22.0, img: "/img/especiais/hossomaki-especial.jpeg" },
   ],
   temakis: [
     { id: 401, name: "Temaki de Copo — Salmão", desc: "Temaki de copo com salmão.", price: 28.0, img: "/img/temakis/temakicopo.jpg" },
