@@ -30,6 +30,9 @@ export const menuItems = {
     { id: 306, name: "Niguiri Salmão", desc: "Niguiri Salmão.", price: 18.0, img: "/img/especiais/niguirisalmao.jpeg" },
     { id: 307, name: "Mikami Supremo 500g", desc: "Mikami Supremo 500g.", price: 55.0, img: "/img/especiais/mikamisupremo.jpeg" },
     { id: 308, name: "Hossomaki Especial ", desc: "Hossomaki especial (8 un.)", price: 22.0, img: "/img/especiais/hossomaki-especial.jpeg" },
+    { id: 309, name: "Joe Ebi Crocante ", desc: "Joe Ebi Crocante (6 Un.)", price: 48.0, img: "/img/especiais/joeebicrocante.jpeg" },
+    { id: 310, name: "Uramaki Philadelphia + Lâminas de Sashimi ", desc: "10 Uramakis Philadelphia + 8 Lâminas de Sashimi", price: 35.0, img: "/img/especiais/uramakiphiladelphiasashimi.jpeg" },
+    { id: 311, name: "Camarão Empanado ", desc: "Camarão Empanado (10 Un.)", price: 25.0, img: "/img/especiais/camaraoempanado.jpeg" },
   ],
   temakis: [
     { id: 401, name: "Temaki de Copo — Salmão", desc: "Temaki de copo com salmão.", price: 28.0, img: "/img/temakis/temakicopo.jpg" },
