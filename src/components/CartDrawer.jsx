@@ -3,7 +3,7 @@ import { fmt } from '../hooks/useCart';
 import { WHATSAPP_NUMBER, PIX_KEY } from '../data/menuItems';
 import ShippingSelect from './ShippingSelect';
 
-export default function CartDrawer({ isOpen, onClose, cart, subtotal, onInc, onDec, onClear, showToast }) {
+export default function CartDrawer({ isOpen, onClose, cart, subtotal, onInc, onDec, onClear, showToast, storeOpen = true, closedMessage }) {
   const [shipping, setShipping] = useState({ price: 0, label: 'Retirada' });
   const [selectedPayment, setSelectedPayment] = useState('dinheiro');
   const [needsChange, setNeedsChange] = useState(null); // null | true | false
@@ -50,6 +50,7 @@ export default function CartDrawer({ isOpen, onClose, cart, subtotal, onInc, onD
 
   function handleCheckout() {
     if (cart.length === 0) { showToast('Carrinho vazio'); return; }
+    if (!storeOpen) { showToast('No momento não estamos fazendo delivery'); return; }
     if (selectedPayment === 'pix') {
       onClose();
       setPixOpen(true);
@@ -129,71 +130,83 @@ export default function CartDrawer({ isOpen, onClose, cart, subtotal, onInc, onD
             <strong>{fmt(total)}</strong>
           </div>
 
-          <div className="payment-section">
-            <h3><i className="fas fa-wallet"></i> Pagamento</h3>
-            <div className="payment-options">
-              {['dinheiro', 'pix'].map(method => (
-                <button
-                  key={method}
-                  data-method={method}
-                  className={`payment-option${selectedPayment === method ? ' active' : ''}`}
-                  onClick={() => handleSelectPayment(method)}
-                  aria-pressed={selectedPayment === method}
-                >
-                  {method === 'dinheiro'
-                    ? <><i className="fas fa-money-bill-wave"></i><span>Dinheiro</span></>
-                    : <><i className="fa-brands fa-pix pix-logo"></i><span>Pix</span></>
-                  }
-                </button>
-              ))}
+          {!storeOpen ? (
+            <div className="store-closed-notice">
+              <i className="fas fa-store-slash"></i>
+              <p>{closedMessage}</p>
+              <button className="btn btn-outline" onClick={handleClear}>
+                <i className="fas fa-trash"></i> Limpar Carrinho
+              </button>
             </div>
-
-            {/* Bloco de troco — só aparece com dinheiro */}
-            {selectedPayment === 'dinheiro' && (
-              <div className="change-box">
-                <p className="change-question">
-                  <i className="fas fa-coins"></i> Precisa de troco?
-                </p>
-                <div className="change-options">
-                  <button
-                    className={`change-btn${needsChange === false ? ' change-btn--no' : ''}`}
-                    onClick={() => { setNeedsChange(false); setChangeFor(''); }}
-                  >
-                    Não preciso
-                  </button>
-                  <button
-                    className={`change-btn${needsChange === true ? ' change-btn--yes' : ''}`}
-                    onClick={() => setNeedsChange(true)}
-                  >
-                    Sim, preciso
-                  </button>
+          ) : (
+            <>
+              <div className="payment-section">
+                <h3><i className="fas fa-wallet"></i> Pagamento</h3>
+                <div className="payment-options">
+                  {['dinheiro', 'pix'].map(method => (
+                    <button
+                      key={method}
+                      data-method={method}
+                      className={`payment-option${selectedPayment === method ? ' active' : ''}`}
+                      onClick={() => handleSelectPayment(method)}
+                      aria-pressed={selectedPayment === method}
+                    >
+                      {method === 'dinheiro'
+                        ? <><i className="fas fa-money-bill-wave"></i><span>Dinheiro</span></>
+                        : <><i className="fa-brands fa-pix pix-logo"></i><span>Pix</span></>
+                      }
+                    </button>
+                  ))}
                 </div>
 
-                {needsChange === true && (
-                  <div className="change-input-wrap">
-                    <span className="change-prefix">R$</span>
-                    <input
-                      className="change-input"
-                      type="number"
-                      min={Math.ceil(total)}
-                      placeholder={`Troco para quanto? (mín. R$ ${Math.ceil(total)})`}
-                      value={changeFor}
-                      onChange={e => setChangeFor(e.target.value)}
-                    />
+                {/* Bloco de troco — só aparece com dinheiro */}
+                {selectedPayment === 'dinheiro' && (
+                  <div className="change-box">
+                    <p className="change-question">
+                      <i className="fas fa-coins"></i> Precisa de troco?
+                    </p>
+                    <div className="change-options">
+                      <button
+                        className={`change-btn${needsChange === false ? ' change-btn--no' : ''}`}
+                        onClick={() => { setNeedsChange(false); setChangeFor(''); }}
+                      >
+                        Não preciso
+                      </button>
+                      <button
+                        className={`change-btn${needsChange === true ? ' change-btn--yes' : ''}`}
+                        onClick={() => setNeedsChange(true)}
+                      >
+                        Sim, preciso
+                      </button>
+                    </div>
+
+                    {needsChange === true && (
+                      <div className="change-input-wrap">
+                        <span className="change-prefix">R$</span>
+                        <input
+                          className="change-input"
+                          type="number"
+                          min={Math.ceil(total)}
+                          placeholder={`Troco para quanto? (mín. R$ ${Math.ceil(total)})`}
+                          value={changeFor}
+                          onChange={e => setChangeFor(e.target.value)}
+                        />
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
-            )}
-          </div>
 
-          <div className="cart-actions">
-            <button className="btn btn-primary" onClick={handleCheckout}>
-              <i className="fab fa-whatsapp"></i> Finalizar no WhatsApp
-            </button>
-            <button className="btn btn-outline" onClick={handleClear}>
-              <i className="fas fa-trash"></i> Limpar Carrinho
-            </button>
-          </div>
+              <div className="cart-actions">
+                <button className="btn btn-primary" onClick={handleCheckout}>
+                  <i className="fab fa-whatsapp"></i> Finalizar no WhatsApp
+                </button>
+                <button className="btn btn-outline" onClick={handleClear}>
+                  <i className="fas fa-trash"></i> Limpar Carrinho
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </aside>
 
@@ -230,6 +243,31 @@ export default function CartDrawer({ isOpen, onClose, cart, subtotal, onInc, onD
       )}
 
       <style>{`
+        .store-closed-notice {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 10px;
+          padding: 18px 14px;
+          background: var(--bg-3);
+          border: 1px solid var(--red-border);
+          border-radius: var(--r-md);
+        }
+
+        .store-closed-notice i {
+          font-size: 1.4rem;
+          color: var(--red);
+        }
+
+        .store-closed-notice p {
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: var(--text-1);
+          line-height: 1.5;
+          margin: 0;
+        }
+
         .change-box {
           margin-top: 12px;
           background: var(--bg-3);

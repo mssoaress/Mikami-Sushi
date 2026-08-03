@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useCart } from './hooks/useCart';
 import { useToast } from './hooks/useToast';
+import { useStoreStatus } from './hooks/useStoreStatus';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Menu from './components/Menu';
@@ -12,6 +13,7 @@ import FeaturedProducts from './components/FeaturedProducts';
 export default function App() {
   const { cart, addItem, incItem, decItem, clearCart, subtotal, count } = useCart();
   const { toasts, showToast } = useToast();
+  const { isOpen: storeOpen, message: closedMessage } = useStoreStatus();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   function handleAdd(id, name, price) {
@@ -41,6 +43,8 @@ export default function App() {
         onDec={decItem}
         onClear={clearCart}
         showToast={showToast}
+        storeOpen={storeOpen}
+        closedMessage={closedMessage}
       />
 
   <main>
