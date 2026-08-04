@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { menuItems, TABS } from '../data/menuItems';
 import MenuItem from './MenuItem';
 
-export default function Menu({ onAdd }) {
+export default function Menu({ onAdd, unavailable }) {
   const [activeTab, setActiveTab] = useState('combos');
 
   return (
@@ -33,7 +33,7 @@ export default function Menu({ onAdd }) {
             role="tabpanel"
           >
             {menuItems[tab.key]?.map(item => (
-              <MenuItem key={item.id} item={item} onAdd={onAdd} />
+              <MenuItem key={item.id} item={item} onAdd={onAdd} unavailable={unavailable?.has(item.id)} />
             ))}
           </div>
         ))}

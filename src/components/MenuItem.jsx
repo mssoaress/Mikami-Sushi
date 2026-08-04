@@ -3,8 +3,9 @@ function formatPrice(price) {
   return 'R$ ' + price.toFixed(2).replace('.', ',');
 }
 
-export default function MenuItem({ item, onAdd }) {
+export default function MenuItem({ item, onAdd, unavailable }) {
   function handleAdd(e) {
+    if (unavailable) return;
     const card = e.currentTarget.closest('.menu-item');
     if (card) {
       card.style.transform = 'scale(0.97)';
@@ -14,9 +15,10 @@ export default function MenuItem({ item, onAdd }) {
   }
 
   return (
-    <article className="menu-item">
+    <article className={`menu-item${unavailable ? ' menu-item--unavailable' : ''}`}>
       <div className="item-image">
         <img src={item.img} alt={item.name} loading="lazy" />
+        {unavailable && <span className="unavailable-badge">Indisponível</span>}
       </div>
       <div className="item-content">
         <h3>{item.name}</h3>
@@ -24,11 +26,12 @@ export default function MenuItem({ item, onAdd }) {
         <div className="item-footer">
           <span className="item-price">{formatPrice(item.price)}</span>
           <button
-            className="btn-add"
+            className={`btn-add${unavailable ? ' btn-add--disabled' : ''}`}
             onClick={handleAdd}
-            aria-label={`Adicionar ${item.name}`}
+            disabled={unavailable}
+            aria-label={unavailable ? `${item.name} indisponível` : `Adicionar ${item.name}`}
           >
-            <i className="fas fa-plus"></i>
+            <i className={`fas ${unavailable ? 'fa-ban' : 'fa-plus'}`}></i>
           </button>
         </div>
       </div>

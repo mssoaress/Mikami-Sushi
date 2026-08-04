@@ -17,7 +17,7 @@ const FEATURED = [
 
 const fmt = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-export default function FeaturedProducts({ onAdd }) {
+export default function FeaturedProducts({ onAdd, unavailable }) {
   const [visible, setVisible] = useState([]);
   const refs = useRef([]);
 
@@ -50,37 +50,42 @@ export default function FeaturedProducts({ onAdd }) {
         </div>
 
         <div className="featured-grid">
-          {FEATURED.map((item, i) => (
-            <div
-              key={item.id}
-              ref={(el) => (refs.current[i] = el)}
-              className={`feat-card ${visible.includes(i) ? 'feat-card--visible' : ''}`}
-              style={{
-                '--fi': i,
-                '--float-dur': `${3.6 + (i % 4) * 0.4}s`,
-                '--float-dist': `${5 + (i % 3) * 2}px`,
-              }}
-            >
-              <div className="feat-img-wrap">
-                <img src={item.img} alt={item.name} className="feat-img" loading="lazy" />
-                <span className="feat-tag">{item.tag}</span>
-                <div className="feat-img-overlay" />
-              </div>
-              <div className="feat-body">
-                <h3 className="feat-name">{item.name}</h3>
-                <div className="item-footer">
-                  <span className="item-price">{fmt(item.price)}</span>
-                  <button
-                    className="btn-add"
-                    onClick={() => onAdd(item.id, item.name, item.price)}
-                    aria-label={`Adicionar ${item.name}`}
-                  >
-                    <i className="fas fa-plus" />
-                  </button>
+          {FEATURED.map((item, i) => {
+            const isUnavailable = unavailable?.has(item.id);
+            return (
+              <div
+                key={item.id}
+                ref={(el) => (refs.current[i] = el)}
+                className={`feat-card ${visible.includes(i) ? 'feat-card--visible' : ''}${isUnavailable ? ' feat-card--unavailable' : ''}`}
+                style={{
+                  '--fi': i,
+                  '--float-dur': `${3.6 + (i % 4) * 0.4}s`,
+                  '--float-dist': `${5 + (i % 3) * 2}px`,
+                }}
+              >
+                <div className="feat-img-wrap">
+                  <img src={item.img} alt={item.name} className="feat-img" loading="lazy" />
+                  <span className="feat-tag">{item.tag}</span>
+                  {isUnavailable && <span className="unavailable-badge">Indisponível</span>}
+                  <div className="feat-img-overlay" />
+                </div>
+                <div className="feat-body">
+                  <h3 className="feat-name">{item.name}</h3>
+                  <div className="item-footer">
+                    <span className="item-price">{fmt(item.price)}</span>
+                    <button
+                      className={`btn-add${isUnavailable ? ' btn-add--disabled' : ''}`}
+                      onClick={() => !isUnavailable && onAdd(item.id, item.name, item.price)}
+                      disabled={isUnavailable}
+                      aria-label={isUnavailable ? `${item.name} indisponível` : `Adicionar ${item.name}`}
+                    >
+                      <i className={`fas ${isUnavailable ? 'fa-ban' : 'fa-plus'}`} />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -178,6 +183,26 @@ export default function FeaturedProducts({ onAdd }) {
         }
 
         .feat-card:hover::after { opacity: 1; }
+
+        /* ---- indisponível ---- */
+        .feat-card--unavailable .feat-img {
+          filter: grayscale(0.85) brightness(0.55);
+        }
+        .feat-card--unavailable .feat-name,
+        .feat-card--unavailable .item-price {
+          opacity: 0.5;
+        }
+        .feat-card--unavailable:hover {
+          transform: translateY(0) scale(1);
+          box-shadow: none;
+          border-color: var(--border);
+          background: var(--bg-3);
+          animation-play-state: running;
+        }
+        .feat-card--unavailable:hover::after { opacity: 0; }
+        .feat-card--unavailable:hover .feat-img {
+          transform: none;
+        }
 
         /* ---- imagem ---- */
         .feat-img-wrap {
