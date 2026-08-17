@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useCart } from './hooks/useCart';
 import { useToast } from './hooks/useToast';
 import { useStoreStatus } from './hooks/useStoreStatus';
-import { useUnavailableProducts } from './hooks/useUnavailableProducts';
+import { useProdutosSite } from './hooks/useProdutosSite';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Menu from './components/Menu';
@@ -15,7 +15,7 @@ export default function App() {
   const { cart, addItem, incItem, decItem, clearCart, subtotal, count } = useCart();
   const { toasts, showToast } = useToast();
   const { isOpen: storeOpen, message: closedMessage } = useStoreStatus();
-  const unavailable = useUnavailableProducts();
+  const { menuItems, categorias, featured, unavailable } = useProdutosSite();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   function handleAdd(id, name, price) {
@@ -51,8 +51,8 @@ export default function App() {
 
   <main>
   <Hero />
-  <Menu onAdd={handleAdd} unavailable={unavailable} />
-  <FeaturedProducts onAdd={handleAdd} unavailable={unavailable} />
+  <Menu onAdd={handleAdd} unavailable={unavailable} menuItems={menuItems} categorias={categorias} />
+  <FeaturedProducts onAdd={handleAdd} unavailable={unavailable} featured={featured} />
   </main>
 
       <Footer />

@@ -1,23 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-const FEATURED = [
-  { id: 307, name: "Mikami Supremo 500g",           price: 55.0, img: "/img/especiais/mikamisupremo.jpeg",          tag: "Especial" },
-  { id: 305, name: "Joe",                            price: 18.0, img: "/img/especiais/joeespecial.jpeg",            tag: "Especial" },
-  { id: 101, name: "Temaki + Hot Roll",              price: 37.0, img: "/img/combos/combo1.jpeg",                    tag: "Combo" },
-  { id: 105, name: "Joe + Niguiri + Mix",            price: 46.0, img: "/img/combos/combo5.jpeg",                    tag: "Combo" },
-  { id: 210, name: "Poke 500ml",                     price: 37.0, img: "/img/individuais/poke.jpeg",                 tag: "Individual" },
-  { id: 207, name: "Hot Dog Salmão",                 price: 30.0, img: "/img/individuais/sushidog.jpg",              tag: "Individual" },
-  { id: 401, name: "Temaki de Copo — Salmão",        price: 28.0, img: "/img/temakis/temakicopo.jpg",                tag: "Temaki" },
-  { id: 405, name: "Temaki de Camarão",              price: 30.0, img: "/img/temakis/temakicamarao.jpeg",            tag: "Temaki" },
-  { id: 501, name: "Yakisoba Individual",            price: 20.0, img: "/img/yakisoba/yakisoba.jpg",                 tag: "Yakisoba" },
-  { id: 502, name: "Yakisoba para 2 Pessoas",        price: 30.0, img: "/img/yakisoba/yakisobap2.png",               tag: "Yakisoba" },
-  { id: 603, name: "Brownie com Sorvete",            price: 15.0, img: "/img/peçasdoces/browniecomsorvete.png",      tag: "Doce" },
-  { id: 601, name: "Harumaki de Banana com Nutella", price: 20.0, img: "/img/peçasdoces/harumakinutela.jpg",         tag: "Doce" },
-];
+const fmt = (v) => Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-const fmt = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-export default function FeaturedProducts({ onAdd, unavailable }) {
+export default function FeaturedProducts({ onAdd, unavailable, featured = [] }) {
   const [visible, setVisible] = useState([]);
   const refs = useRef([]);
 
@@ -37,7 +22,9 @@ export default function FeaturedProducts({ onAdd, unavailable }) {
       return obs;
     });
     return () => observers.forEach((o) => o?.disconnect());
-  }, []);
+  }, [featured.length]);
+
+  if (!featured.length) return null;
 
   return (
     <section className="featured-section">
@@ -50,7 +37,7 @@ export default function FeaturedProducts({ onAdd, unavailable }) {
         </div>
 
         <div className="featured-grid">
-          {FEATURED.map((item, i) => {
+          {featured.map((item, i) => {
             const isUnavailable = unavailable?.has(item.id);
             return (
               <div
@@ -64,20 +51,20 @@ export default function FeaturedProducts({ onAdd, unavailable }) {
                 }}
               >
                 <div className="feat-img-wrap">
-                  <img src={item.img} alt={item.name} className="feat-img" loading="lazy" />
-                  <span className="feat-tag">{item.tag}</span>
+                  <img src={item.img} alt={item.nome} className="feat-img" loading="lazy" />
+                  <span className="feat-tag">{item.tag || item.categoria}</span>
                   {isUnavailable && <span className="unavailable-badge">Indisponível</span>}
                   <div className="feat-img-overlay" />
                 </div>
                 <div className="feat-body">
-                  <h3 className="feat-name">{item.name}</h3>
+                  <h3 className="feat-name">{item.nome}</h3>
                   <div className="item-footer">
-                    <span className="item-price">{fmt(item.price)}</span>
+                    <span className="item-price">{fmt(item.preco)}</span>
                     <button
                       className={`btn-add${isUnavailable ? ' btn-add--disabled' : ''}`}
-                      onClick={() => !isUnavailable && onAdd(item.id, item.name, item.price)}
+                      onClick={() => !isUnavailable && onAdd(item.id, item.nome, item.preco)}
                       disabled={isUnavailable}
-                      aria-label={isUnavailable ? `${item.name} indisponível` : `Adicionar ${item.name}`}
+                      aria-label={isUnavailable ? `${item.nome} indisponível` : `Adicionar ${item.nome}`}
                     >
                       <i className={`fas ${isUnavailable ? 'fa-ban' : 'fa-plus'}`} />
                     </button>

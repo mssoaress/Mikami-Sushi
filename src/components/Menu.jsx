@@ -1,9 +1,26 @@
-import { useState } from 'react';
-import { menuItems, TABS } from '../data/menuItems';
+import { useEffect, useState } from 'react';
 import MenuItem from './MenuItem';
 
-export default function Menu({ onAdd, unavailable }) {
-  const [activeTab, setActiveTab] = useState('combos');
+export default function Menu({ onAdd, unavailable, menuItems = {}, categorias = [] }) {
+  const [activeTab, setActiveTab] = useState(null);
+
+  // Garante que a aba ativa sempre aponte pra uma categoria que existe,
+  // mesmo antes dos produtos carregarem ou se a lista de categorias mudar.
+  useEffect(() => {
+    if (categorias.length && !categorias.includes(activeTab)) {
+      setActiveTab(categorias[0]);
+    }
+  }, [categorias, activeTab]);
+
+  if (!categorias.length) {
+    return (
+      <section className="menu" id="cardapio">
+        <div className="container">
+          <div className="section-header"><h2>Cardápio</h2></div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="menu" id="cardapio">
@@ -11,28 +28,27 @@ export default function Menu({ onAdd, unavailable }) {
         <div className="section-header">
           <h2>Cardápio</h2>
           <div className="tab-bar" role="tablist">
-            {TABS.map(tab => (
+            {categorias.map(cat => (
               <button
-                key={tab.key}
-                className={`tab-btn${activeTab === tab.key ? ' active' : ''}`}
-                onClick={() => setActiveTab(tab.key)}
+                key={cat}
+                className={`tab-btn${activeTab === cat ? ' active' : ''}`}
+                onClick={() => setActiveTab(cat)}
                 role="tab"
-                aria-selected={activeTab === tab.key}
+                aria-selected={activeTab === cat}
               >
-                {tab.label}
+                {cat}
               </button>
             ))}
           </div>
         </div>
 
-        {TABS.map(tab => (
+        {categorias.map(cat => (
           <div
-            key={tab.key}
-            className={`menu-grid${activeTab === tab.key ? ' active' : ''}`}
-            id={`${tab.key}-items`}
+            key={cat}
+            className={`menu-grid${activeTab === cat ? ' active' : ''}`}
             role="tabpanel"
           >
-            {menuItems[tab.key]?.map(item => (
+            {menuItems[cat]?.map(item => (
               <MenuItem key={item.id} item={item} onAdd={onAdd} unavailable={unavailable?.has(item.id)} />
             ))}
           </div>
