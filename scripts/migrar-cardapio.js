@@ -10,17 +10,18 @@
 // Como rodar:
 //   1. npm install   (instala o pacote "cloudinary" que adicionei)
 //   2. Defina as variáveis de ambiente com sua chave (NÃO cole a
-//      chave direto no código — assim ela nunca vai parar no Git):
+//      chave direto no código nem aqui nos comentários — assim ela
+//      nunca vai parar no Git):
 //
 //      No Mac/Linux:
 //        export CLOUDINARY_CLOUD_NAME=dnxnmjihb
-//        export CLOUDINARY_API_KEY=152739294555486
-//        export CLOUDINARY_API_SECRET=ws6L1KNZMXB_kV9j-3_CdV_1qV0
+//        export CLOUDINARY_API_KEY=SEU_API_KEY_AQUI
+//        export CLOUDINARY_API_SECRET=SEU_API_SECRET_AQUI
 //
 //      No Windows (PowerShell):
 //        $env:CLOUDINARY_CLOUD_NAME="dnxnmjihb"
-//        $env:CLOUDINARY_API_KEY="152739294555486"
-//        $env:CLOUDINARY_API_SECRET="ws6L1KNZMXB_kV9j-3_CdV_1qV0"
+//        $env:CLOUDINARY_API_KEY="SEU_API_KEY_AQUI"
+//        $env:CLOUDINARY_API_SECRET="SEU_API_SECRET_AQUI"
 //
 //   3. npm run migrar-cardapio
 //
