@@ -19,6 +19,9 @@ export default function MenuItem({ item, onAdd, unavailable }) {
       <div className="item-image">
         <img src={item.img} alt={item.nome} loading="lazy" />
         {unavailable && <span className="unavailable-badge">Indisponível</span>}
+        {!unavailable && (item.estoque !== null && item.estoque !== undefined) && (
+          <span className="estoque-badge">Restam {item.estoque}</span>
+        )}
       </div>
       <div className="item-content">
         <h3>{item.nome}</h3>

@@ -15,7 +15,7 @@ export default function App() {
   const { cart, addItem, incItem, decItem, clearCart, subtotal, count } = useCart();
   const { toasts, showToast } = useToast();
   const { isOpen: storeOpen, message: closedMessage } = useStoreStatus();
-  const { menuItems, categorias, featured, unavailable } = useProdutosSite();
+  const { menuItems, categorias, featured, destaqueDia, unavailable } = useProdutosSite();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   function handleAdd(id, name, price) {
@@ -51,8 +51,9 @@ export default function App() {
 
   <main>
   <Hero />
+  <FeaturedProducts onAdd={handleAdd} unavailable={unavailable} items={destaqueDia} title="Destaque do Dia" />
   <Menu onAdd={handleAdd} unavailable={unavailable} menuItems={menuItems} categorias={categorias} />
-  <FeaturedProducts onAdd={handleAdd} unavailable={unavailable} featured={featured} />
+  <FeaturedProducts onAdd={handleAdd} unavailable={unavailable} items={featured} title="Destaques da Mikami" />
   </main>
 
       <Footer />

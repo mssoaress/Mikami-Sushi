@@ -11,6 +11,7 @@ export function useProdutosSite() {
     menuItems: {},   // { "Combos": [...], "Individuais": [...], ... }
     categorias: [],  // ordem de exibição das abas
     featured: [],    // produtos marcados como destaque
+    destaqueDia: [], // produtos marcados como destaque do dia
     unavailable: new Set(),
     loading: true,
   });
@@ -32,14 +33,19 @@ export function useProdutosSite() {
             const cat = p.categoria || 'Outros';
             if (!menuItems[cat]) { menuItems[cat] = []; categorias.push(cat); }
             menuItems[cat].push(p);
-            if (p.disponivel === false) unavailable.add(p.id);
+            const semEstoque = (p.estoque !== null && p.estoque !== undefined) && p.estoque <= 0;
+            if (p.disponivel === false || semEstoque) unavailable.add(p.id);
           });
 
         const featured = produtos
           .filter((p) => p.destaque)
           .sort((a, b) => (a.ordemDestaque ?? 0) - (b.ordemDestaque ?? 0));
 
-        setState({ menuItems, categorias, featured, unavailable, loading: false });
+        const destaqueDia = produtos
+          .filter((p) => p.destaqueDia)
+          .sort((a, b) => (a.ordemDestaqueDia ?? 0) - (b.ordemDestaqueDia ?? 0));
+
+        setState({ menuItems, categorias, featured, destaqueDia, unavailable, loading: false });
       },
       (err) => {
         console.error('Não foi possível carregar os produtos do site:', err);

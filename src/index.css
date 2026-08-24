@@ -621,6 +621,21 @@ a { text-decoration: none; color: inherit; }
   z-index: 2;
 }
 
+.estoque-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(6, 6, 8, 0.82);
+  color: var(--gold-text);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 4px 10px;
+  border-radius: var(--r-full);
+  border: 1px solid var(--gold-soft);
+  z-index: 2;
+}
+
 /* Imagem */
 .item-image {
   height: 196px;

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 const fmt = (v) => Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-export default function FeaturedProducts({ onAdd, unavailable, featured = [] }) {
+export default function FeaturedProducts({ onAdd, unavailable, items = [], title = 'Destaques da Mikami' }) {
   const [visible, setVisible] = useState([]);
   const refs = useRef([]);
 
@@ -22,9 +22,9 @@ export default function FeaturedProducts({ onAdd, unavailable, featured = [] }) 
       return obs;
     });
     return () => observers.forEach((o) => o?.disconnect());
-  }, [featured.length]);
+  }, [items.length]);
 
-  if (!featured.length) return null;
+  if (!items.length) return null;
 
   return (
     <section className="featured-section">
@@ -33,11 +33,11 @@ export default function FeaturedProducts({ onAdd, unavailable, featured = [] }) 
 
       <div className="container">
         <div className="section-header">
-          <h2>Destaques da Mikami</h2>
+          <h2>{title}</h2>
         </div>
 
         <div className="featured-grid">
-          {featured.map((item, i) => {
+          {items.map((item, i) => {
             const isUnavailable = unavailable?.has(item.id);
             return (
               <div
@@ -54,6 +54,9 @@ export default function FeaturedProducts({ onAdd, unavailable, featured = [] }) 
                   <img src={item.img} alt={item.nome} className="feat-img" loading="lazy" />
                   <span className="feat-tag">{item.tag || item.categoria}</span>
                   {isUnavailable && <span className="unavailable-badge">Indisponível</span>}
+                  {!isUnavailable && (item.estoque !== null && item.estoque !== undefined) && (
+                    <span className="estoque-badge">Restam {item.estoque}</span>
+                  )}
                   <div className="feat-img-overlay" />
                 </div>
                 <div className="feat-body">

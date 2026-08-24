@@ -1,7 +1,36 @@
 import { useState } from 'react';
+import { doc, runTransaction } from 'firebase/firestore';
+import { db } from '../firebase';
 import { fmt } from '../hooks/useCart';
 import { WHATSAPP_NUMBER, PIX_KEY } from '../data/menuItems';
 import ShippingSelect from './ShippingSelect';
+
+// Desconta o estoque de cada item do carrinho de forma atômica — usa uma
+// transação do Firestore pra evitar que dois clientes comprando ao mesmo
+// tempo "furem" o estoque (ex: só resta 1 e os dois conseguem levar).
+// Produtos sem controle de estoque (campo estoque em branco/null) não são
+// tocados. Se algum item não tiver mais quantidade suficiente, a
+// transação inteira é cancelada e nada é descontado.
+async function baixarEstoque(cart) {
+  await runTransaction(db, async (transaction) => {
+    const refs = cart.map(item => doc(db, 'produtos_site', String(item.id)));
+    const snaps = await Promise.all(refs.map(ref => transaction.get(ref)));
+
+    for (let i = 0; i < cart.length; i++) {
+      const estoque = snaps[i].data()?.estoque;
+      const controla = estoque !== null && estoque !== undefined;
+      if (controla && estoque < cart[i].qty) {
+        throw new Error(`Só restam ${estoque}x "${cart[i].name}" — ajuste a quantidade no carrinho.`);
+      }
+    }
+
+    refs.forEach((ref, i) => {
+      const estoque = snaps[i].data()?.estoque;
+      const controla = estoque !== null && estoque !== undefined;
+      if (controla) transaction.update(ref, { estoque: estoque - cart[i].qty });
+    });
+  });
+}
 
 export default function CartDrawer({ isOpen, onClose, cart, subtotal, onInc, onDec, onClear, showToast, storeOpen = true, closedMessage }) {
   const [shipping, setShipping] = useState({ price: 0, label: 'Retirada' });
@@ -9,6 +38,7 @@ export default function CartDrawer({ isOpen, onClose, cart, subtotal, onInc, onD
   const [needsChange, setNeedsChange] = useState(null); // null | true | false
   const [changeFor, setChangeFor] = useState('');
   const [pixOpen, setPixOpen] = useState(false);
+  const [enviando, setEnviando] = useState(false);
 
   const total = subtotal + shipping.price;
 
@@ -42,9 +72,19 @@ export default function CartDrawer({ isOpen, onClose, cart, subtotal, onInc, onD
     return msg;
   }
 
-  function sendToWhatsApp(method) {
+  async function sendToWhatsApp(method) {
+    if (enviando) return;
+    setEnviando(true);
+    try {
+      await baixarEstoque(cart);
+    } catch (err) {
+      showToast(err.message || 'Um item esgotou enquanto você comprava — ajuste o carrinho.');
+      setEnviando(false);
+      return;
+    }
     const msg = buildWhatsAppMessage(method);
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+    setEnviando(false);
     onClose();
   }
 
@@ -198,8 +238,8 @@ export default function CartDrawer({ isOpen, onClose, cart, subtotal, onInc, onD
               </div>
 
               <div className="cart-actions">
-                <button className="btn btn-primary" onClick={handleCheckout}>
-                  <i className="fab fa-whatsapp"></i> Finalizar no WhatsApp
+                <button className="btn btn-primary" onClick={handleCheckout} disabled={enviando}>
+                  <i className="fab fa-whatsapp"></i> {enviando ? 'Confirmando...' : 'Finalizar no WhatsApp'}
                 </button>
                 <button className="btn btn-outline" onClick={handleClear}>
                   <i className="fas fa-trash"></i> Limpar Carrinho
@@ -235,8 +275,8 @@ export default function CartDrawer({ isOpen, onClose, cart, subtotal, onInc, onD
                 <i className="fas fa-copy"></i> Copiar
               </button>
             </div>
-            <button className="btn btn-primary pix-confirm-btn" onClick={() => { setPixOpen(false); sendToWhatsApp('pix'); }}>
-              <i className="fab fa-whatsapp"></i> Já paguei — Enviar pedido
+            <button className="btn btn-primary pix-confirm-btn" onClick={() => { setPixOpen(false); sendToWhatsApp('pix'); }} disabled={enviando}>
+              <i className="fab fa-whatsapp"></i> {enviando ? 'Confirmando...' : 'Já paguei — Enviar pedido'}
             </button>
           </div>
         </div>
