@@ -15,5 +15,5 @@ export const SHIPPING_OPTIONS = [
   { value: 'vertente_do_lerio', price: 15, icon: '📍', label: 'Vertente do Lério', display: 'R$ 15,00' },
 ];
 
-export const WHATSAPP_NUMBER = '558197781945';
+export const WHATSAPP_NUMBER = '5581997781945';
 export const PIX_KEY = '81997781945';
