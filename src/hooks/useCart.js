@@ -11,7 +11,13 @@ function loadCart() {
 }
 
 function saveCart(cart) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+  } catch {
+    // Em navegação privada ou com armazenamento bloqueado o localStorage
+    // pode lançar erro — nesse caso o carrinho só não persiste entre
+    // recarregamentos, mas o app continua funcionando na mesma sessão.
+  }
 }
 
 export function fmt(value) {

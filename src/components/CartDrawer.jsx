@@ -75,15 +75,33 @@ export default function CartDrawer({ isOpen, onClose, cart, subtotal, onInc, onD
   async function sendToWhatsApp(method) {
     if (enviando) return;
     setEnviando(true);
+
+    // Abre a aba já aqui, de forma síncrona, dentro do clique do usuário —
+    // se esperarmos a baixa de estoque (await) pra só então chamar
+    // window.open, navegadores como Safari/iOS não reconhecem mais isso
+    // como resultado direto de um clique e bloqueiam a abertura, sem
+    // avisar o cliente. Preenchemos a URL dessa aba depois que a baixa
+    // de estoque terminar.
+    const win = window.open('', '_blank');
+
     try {
       await baixarEstoque(cart);
     } catch (err) {
+      if (win) win.close();
       showToast(err.message || 'Um item esgotou enquanto você comprava — ajuste o carrinho.');
       setEnviando(false);
       return;
     }
+
     const msg = buildWhatsAppMessage(method);
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    if (win) {
+      win.location.href = url;
+    } else {
+      // Fallback caso o navegador não tenha permitido nem a aba em branco
+      // (ex: bloqueador de pop-up mais agressivo) — tenta abrir direto.
+      window.open(url, '_blank');
+    }
     setEnviando(false);
     onClose();
   }
