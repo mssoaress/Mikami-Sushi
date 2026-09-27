@@ -5,7 +5,7 @@
 
 export const SHIPPING_OPTIONS = [
   { value: 'retirada',          price: 0,  icon: '🏠', label: 'Retirada',          display: 'Grátis',    free: true },
-  { value: 'cidade',            price: 3,  icon: '📍', label: 'Cidade',            display: 'R$ 3,00' },
+  { value: 'cecilia',           price: 3,  icon: '📍', label: 'Cecilia',           display: 'R$ 3,00' },
   { value: 'embebedado',        price: 5,  icon: '📍', label: 'Embebedado',        display: 'R$ 5,00' },
   { value: 'pedra_branca',      price: 6,  icon: '📍', label: 'Pedra Branca',      display: 'R$ 6,00' },
   { value: 'cumati',            price: 5,  icon: '📍', label: 'Cumati',            display: 'R$ 5,00' },

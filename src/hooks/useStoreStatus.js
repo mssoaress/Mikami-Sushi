@@ -4,15 +4,13 @@ import { db } from '../firebase';
 
 const MENSAGEM_PADRAO = 'No momento não estamos fazendo delivery. Assim que voltarmos a atender, você já pode finalizar seu pedido normalmente.';
 
-// Escuta em tempo real o documento config/loja no Firestore (o mesmo que
-// o painel admin controla na tela "Site"). Se o documento ainda não
-// existir, ou se houver qualquer erro de leitura, assume loja aberta —
-// assim um problema de conexão nunca bloqueia pedidos por engano.
 export function useStoreStatus() {
+  const [retryKey, setRetryKey] = useState(0);
   const [status, setStatus] = useState({
-    isOpen: true,
+    isOpen: false,
     message: MENSAGEM_PADRAO,
     loading: true,
+    error: null,
   });
 
   useEffect(() => {
@@ -20,20 +18,41 @@ export function useStoreStatus() {
     const unsubscribe = onSnapshot(
       ref,
       (snap) => {
-        const data = snap.exists() ? snap.data() : {};
+        if (!snap.exists()) {
+          setStatus({
+            isOpen: false,
+            message: 'Não foi possível confirmar se a loja está aberta. Tente novamente em instantes.',
+            loading: false,
+            error: 'Status da loja não configurado.',
+          });
+          return;
+        }
+        const data = snap.data();
         setStatus({
           isOpen: data.aberto !== false,
           message: data.motivo || MENSAGEM_PADRAO,
           loading: false,
+          error: null,
         });
       },
       (err) => {
         console.error('Não foi possível verificar o status da loja:', err);
-        setStatus((prev) => ({ ...prev, loading: false }));
+        setStatus({
+          isOpen: false,
+          message: 'Não foi possível confirmar se a loja está aberta. Verifique sua conexão e tente novamente.',
+          loading: false,
+          error: 'Falha ao consultar o status da loja.',
+        });
       }
     );
     return () => unsubscribe();
-  }, []);
+  }, [retryKey]);
 
-  return status;
+  return {
+    ...status,
+    retry: () => {
+      setStatus((previous) => ({ ...previous, loading: true, error: null }));
+      setRetryKey((value) => value + 1);
+    },
+  };
 }

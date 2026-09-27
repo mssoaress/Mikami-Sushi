@@ -7,13 +7,16 @@ import { db } from '../firebase';
 // menuItems.js estático: agora o cardápio inteiro (nome, preço, foto,
 // categoria, disponibilidade, destaque) é controlado pelo admin.
 export function useProdutosSite() {
+  const [retryKey, setRetryKey] = useState(0);
   const [state, setState] = useState({
+    products: [],
     menuItems: {},   // { "Combos": [...], "Individuais": [...], ... }
     categorias: [],  // ordem de exibição das abas
     featured: [],    // produtos marcados como destaque
     destaqueDia: [], // produtos marcados como destaque do dia
     unavailable: new Set(),
     loading: true,
+    error: null,
   });
 
   useEffect(() => {
@@ -45,15 +48,31 @@ export function useProdutosSite() {
           .filter((p) => p.destaqueDia)
           .sort((a, b) => (a.ordemDestaqueDia ?? 0) - (b.ordemDestaqueDia ?? 0));
 
-        setState({ menuItems, categorias, featured, destaqueDia, unavailable, loading: false });
+        setState({
+          products: produtos,
+          menuItems,
+          categorias,
+          featured,
+          destaqueDia,
+          unavailable,
+          loading: false,
+          error: null,
+        });
       },
       (err) => {
         console.error('Não foi possível carregar os produtos do site:', err);
-        setState((prev) => ({ ...prev, loading: false }));
+        setState((prev) => ({
+          ...prev,
+          loading: false,
+          error: 'Não foi possível carregar o cardápio. Verifique sua conexão e tente novamente.',
+        }));
       }
     );
     return () => unsubscribe();
-  }, []);
+  }, [retryKey]);
 
-  return state;
+  return { ...state, retry: () => {
+    setState((previous) => ({ ...previous, loading: true, error: null }));
+    setRetryKey((value) => value + 1);
+  } };
 }
