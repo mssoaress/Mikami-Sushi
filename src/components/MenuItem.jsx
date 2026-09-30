@@ -5,7 +5,7 @@ function formatPrice(price) {
   return 'R$ ' + Number(price).toFixed(2).replace('.', ',');
 }
 
-export default function MenuItem({ item, itemIndex = 0, onAdd, unavailable }) {
+export default function MenuItem({ item, itemIndex = 0, onAdd, onView, unavailable }) {
   const imageSource = optimizedImageSrc(item.img);
 
   function handleAdd(e) {
@@ -50,6 +50,7 @@ export default function MenuItem({ item, itemIndex = 0, onAdd, unavailable }) {
           </button>
         </div>
       </div>
+      <button type="button" className="product-card-open" onClick={() => onView?.(item)} aria-label={`Ver detalhes de ${item.nome}`} />
     </article>
   );
 }

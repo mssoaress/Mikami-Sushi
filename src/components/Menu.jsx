@@ -1,7 +1,7 @@
 import { useId, useRef, useState } from 'react';
 import MenuItem from './MenuItem';
 
-export default function Menu({ onAdd, unavailable, menuItems = {}, categorias = [], loading, error, onRetry }) {
+export default function Menu({ onAdd, onView, unavailable, menuItems = {}, categorias = [], loading, error, onRetry }) {
   const [activeTab, setActiveTab] = useState(null);
   const tabRefs = useRef([]);
   const idPrefix = useId().replace(/:/g, '');
@@ -89,7 +89,7 @@ export default function Menu({ onAdd, unavailable, menuItems = {}, categorias = 
             hidden={selectedTab !== cat}
           >
             {menuItems[cat]?.map((item, itemIndex) => (
-              <MenuItem key={item.id} item={item} itemIndex={itemIndex} onAdd={onAdd} unavailable={unavailable?.has(item.id)} />
+              <MenuItem key={item.id} item={item} itemIndex={itemIndex} onAdd={onAdd} onView={onView} unavailable={unavailable?.has(item.id)} />
             ))}
           </div>
         ))}

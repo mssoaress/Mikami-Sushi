@@ -1,11 +1,20 @@
 const cloudinaryUpload = '/image/upload/';
 const cloudinaryTransform = 'f_auto,q_auto:eco,w_900,c_limit/';
+const cloudinaryDetailTransform = 'f_auto,q_auto:good,w_1600,c_limit/';
 
-export function optimizedImageSrc(source) {
+function transformedCloudinaryImage(source, transform) {
   if (typeof source !== 'string') return source;
   if (!source.includes('res.cloudinary.com') || !source.includes(cloudinaryUpload)) return source;
-  if (source.includes(`${cloudinaryUpload}${cloudinaryTransform}`)) return source;
-  return source.replace(cloudinaryUpload, `${cloudinaryUpload}${cloudinaryTransform}`);
+  if (source.includes(`${cloudinaryUpload}${transform}`)) return source;
+  return source.replace(cloudinaryUpload, `${cloudinaryUpload}${transform}`);
+}
+
+export function optimizedImageSrc(source) {
+  return transformedCloudinaryImage(source, cloudinaryTransform);
+}
+
+export function detailImageSrc(source) {
+  return transformedCloudinaryImage(source, cloudinaryDetailTransform);
 }
 
 export function fallbackToOriginalImage(event, originalSource) {

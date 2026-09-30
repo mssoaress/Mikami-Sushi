@@ -11,6 +11,7 @@ import ToastContainer from './components/ToastContainer';
 import Footer from './components/Footer';
 import FeaturedProducts from './components/FeaturedProducts';
 import ExperienceStrip from './components/ExperienceStrip';
+import ProductModal from './components/ProductModal';
 
 export default function App() {
   const { cart: storedCart, addItem, incItem, decItem, removeItems, clearCart, count } = useCart();
@@ -34,8 +35,11 @@ export default function App() {
     retry: retryProducts,
   } = useProdutosSite();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const openDrawer = useCallback(() => setDrawerOpen(true), []);
   const closeDrawer = useCallback(() => setDrawerOpen(false), []);
+  const openProduct = useCallback((product) => setSelectedProduct(product), []);
+  const closeProduct = useCallback(() => setSelectedProduct(null), []);
 
   const productById = useMemo(
     () => new Map(products.map((product) => [String(product.id), product])),
@@ -93,12 +97,21 @@ export default function App() {
         productsError={productsError}
       />
 
+      <ProductModal
+        key={selectedProduct?.id || 'closed-product'}
+        item={selectedProduct}
+        unavailable={selectedProduct ? unavailable.has(selectedProduct.id) : false}
+        onClose={closeProduct}
+        onAdd={handleAdd}
+      />
+
   <main>
   <Hero storeOpen={storeOpen} storeLoading={storeLoading} storeError={storeError} onOpenCart={openDrawer} />
   <ExperienceStrip />
-  <FeaturedProducts onAdd={handleAdd} unavailable={unavailable} items={destaqueDia} title="Destaque do Dia" eyebrow="Seleção de hoje" sectionIndex="01" variant="daily" />
+  <FeaturedProducts onAdd={handleAdd} onView={openProduct} unavailable={unavailable} items={destaqueDia} title="Destaque do Dia" eyebrow="Seleção de hoje" sectionIndex="01" variant="daily" />
   <Menu
     onAdd={handleAdd}
+    onView={openProduct}
     unavailable={unavailable}
     menuItems={menuItems}
     categorias={categorias}
@@ -106,7 +119,7 @@ export default function App() {
     error={productsError}
     onRetry={retryProducts}
   />
-  <FeaturedProducts id="destaques" onAdd={handleAdd} unavailable={unavailable} items={featured} title="Destaques da Mikami" eyebrow="Escolhas da casa" sectionIndex="03" variant="collection" />
+  <FeaturedProducts id="destaques" onAdd={handleAdd} onView={openProduct} unavailable={unavailable} items={featured} title="Destaques da Mikami" eyebrow="Escolhas da casa" sectionIndex="03" variant="collection" />
   </main>
 
       <Footer />

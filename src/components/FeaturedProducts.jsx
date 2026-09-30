@@ -8,6 +8,7 @@ const fmt = (value) => Number(value || 0).toLocaleString('pt-BR', {
 
 export default function FeaturedProducts({
   onAdd,
+  onView,
   unavailable,
   items = [],
   title = 'Destaques da Mikami',
@@ -100,6 +101,7 @@ export default function FeaturedProducts({
                     </button>
                   </div>
                 </div>
+                <button type="button" className="product-card-open" onClick={() => onView?.(item)} aria-label={`Ver detalhes de ${item.nome}`} />
               </article>
             );
           })}
